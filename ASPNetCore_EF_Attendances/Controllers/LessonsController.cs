@@ -48,7 +48,7 @@ namespace ASPNetCore_EF_Attendances.Controllers
         // GET: Lessons/Create
         public IActionResult Create()
         {
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "ID");
+            ViewData["CourseID"] = new SelectList(_context.Courses, nameof(Course.ID), nameof(Course.Name));
             return View();
         }
 

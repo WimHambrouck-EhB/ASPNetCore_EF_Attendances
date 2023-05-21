@@ -4,7 +4,8 @@
     {
         public int ID { get; set; }
         public string Name { get; set; } = string.Empty;
-        public ICollection<Student>? Students { get; set; }
+        public ICollection<CourseStudent>? CourseStudents{ get; set; }
+        public List<Student>? Students { get; set; }
         public ICollection<Lesson>? Lessons { get; set; }
     }
 }

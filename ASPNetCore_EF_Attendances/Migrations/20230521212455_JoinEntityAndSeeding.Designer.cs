@@ -4,6 +4,7 @@ using ASPNetCore_EF_Attendances.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPNetCore_EF_Attendances.Migrations
 {
     [DbContext(typeof(AttendancesContext))]
-    partial class ASPNetCore_EF_AttendancesContextModelSnapshot : ModelSnapshot
+    [Migration("20230521212455_JoinEntityAndSeeding")]
+    partial class JoinEntityAndSeeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
