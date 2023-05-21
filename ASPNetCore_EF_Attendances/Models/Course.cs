@@ -3,7 +3,7 @@
     public class Course
     {
         public int ID { get; set; }
-        public string Naam { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public ICollection<Student>? Students { get; set; }
         public ICollection<Lesson>? Lessons { get; set; }
     }

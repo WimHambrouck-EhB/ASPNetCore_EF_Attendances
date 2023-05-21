@@ -10,87 +10,90 @@ using ASPNetCore_EF_Attendances.Models;
 
 namespace ASPNetCore_EF_Attendances.Controllers
 {
-    public class StudentsController : Controller
+    public class LessonsController : Controller
     {
         private readonly ASPNetCore_EF_AttendancesContext _context;
 
-        public StudentsController(ASPNetCore_EF_AttendancesContext context)
+        public LessonsController(ASPNetCore_EF_AttendancesContext context)
         {
             _context = context;
         }
 
-        // GET: Students
+        // GET: Lessons
         public async Task<IActionResult> Index()
         {
-              return _context.Students != null ? 
-                          View(await _context.Students.ToListAsync()) :
-                          Problem("Entity set 'ASPNetCore_EF_AttendancesContext.Students'  is null.");
+            var aSPNetCore_EF_AttendancesContext = _context.Lessons.Include(l => l.Course);
+            return View(await aSPNetCore_EF_AttendancesContext.ToListAsync());
         }
 
-        // GET: Students/Details/5
+        // GET: Lessons/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.Lessons == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var lesson = await _context.Lessons
+                .Include(l => l.Course)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (student == null)
+            if (lesson == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(lesson);
         }
 
-        // GET: Students/Create
+        // GET: Lessons/Create
         public IActionResult Create()
         {
+            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "ID");
             return View();
         }
 
-        // POST: Students/Create
+        // POST: Lessons/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FirstName,LastName")] Student student)
+        public async Task<IActionResult> Create([Bind("ID,StartTime,CourseID")] Lesson lesson)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(student);
+                _context.Add(lesson);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "ID", lesson.CourseID);
+            return View(lesson);
         }
 
-        // GET: Students/Edit/5
+        // GET: Lessons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.Lessons == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
+            var lesson = await _context.Lessons.FindAsync(id);
+            if (lesson == null)
             {
                 return NotFound();
             }
-            return View(student);
+            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "ID", lesson.CourseID);
+            return View(lesson);
         }
 
-        // POST: Students/Edit/5
+        // POST: Lessons/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FirstName,LastName")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,StartTime,CourseID")] Lesson lesson)
         {
-            if (id != student.ID)
+            if (id != lesson.ID)
             {
                 return NotFound();
             }
@@ -99,12 +102,12 @@ namespace ASPNetCore_EF_Attendances.Controllers
             {
                 try
                 {
-                    _context.Update(student);
+                    _context.Update(lesson);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StudentExists(student.ID))
+                    if (!LessonExists(lesson.ID))
                     {
                         return NotFound();
                     }
@@ -115,49 +118,51 @@ namespace ASPNetCore_EF_Attendances.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(student);
+            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "ID", lesson.CourseID);
+            return View(lesson);
         }
 
-        // GET: Students/Delete/5
+        // GET: Lessons/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Students == null)
+            if (id == null || _context.Lessons == null)
             {
                 return NotFound();
             }
 
-            var student = await _context.Students
+            var lesson = await _context.Lessons
+                .Include(l => l.Course)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (student == null)
+            if (lesson == null)
             {
                 return NotFound();
             }
 
-            return View(student);
+            return View(lesson);
         }
 
-        // POST: Students/Delete/5
+        // POST: Lessons/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Students == null)
+            if (_context.Lessons == null)
             {
-                return Problem("Entity set 'ASPNetCore_EF_AttendancesContext.Students'  is null.");
+                return Problem("Entity set 'ASPNetCore_EF_AttendancesContext.Lessons'  is null.");
             }
-            var student = await _context.Students.FindAsync(id);
-            if (student != null)
+            var lesson = await _context.Lessons.FindAsync(id);
+            if (lesson != null)
             {
-                _context.Students.Remove(student);
+                _context.Lessons.Remove(lesson);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StudentExists(int id)
+        private bool LessonExists(int id)
         {
-          return (_context.Students?.Any(e => e.ID == id)).GetValueOrDefault();
+          return (_context.Lessons?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }
