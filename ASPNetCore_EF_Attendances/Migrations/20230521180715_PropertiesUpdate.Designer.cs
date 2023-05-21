@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ASPNetCore_EF_Attendances.Migrations
 {
-    [DbContext(typeof(ASPNetCore_EF_AttendancesContext))]
+    [DbContext(typeof(AttendancesContext))]
     [Migration("20230521180715_PropertiesUpdate")]
     partial class PropertiesUpdate
     {

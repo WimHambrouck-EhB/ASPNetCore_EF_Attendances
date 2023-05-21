@@ -12,9 +12,9 @@ namespace ASPNetCore_EF_Attendances.Controllers
 {
     public class LessonsController : Controller
     {
-        private readonly ASPNetCore_EF_AttendancesContext _context;
+        private readonly AttendancesContext _context;
 
-        public LessonsController(ASPNetCore_EF_AttendancesContext context)
+        public LessonsController(AttendancesContext context)
         {
             _context = context;
         }

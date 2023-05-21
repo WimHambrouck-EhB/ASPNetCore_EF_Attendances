@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ASPNetCore_EF_Attendances.Migrations
 {
-    [DbContext(typeof(ASPNetCore_EF_AttendancesContext))]
+    [DbContext(typeof(AttendancesContext))]
     partial class ASPNetCore_EF_AttendancesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
