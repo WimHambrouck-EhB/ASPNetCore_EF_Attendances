@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ASPNetCore_EF_Attendances.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ASPNetCore_EF_AttendancesContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ASPNetCore_EF_AttendancesContext") ?? throw new InvalidOperationException("Connection string 'ASPNetCore_EF_AttendancesContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
