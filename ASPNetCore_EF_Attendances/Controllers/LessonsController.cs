@@ -65,7 +65,7 @@ namespace ASPNetCore_EF_Attendances.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseID"] = new SelectList(_context.Courses, "ID", "ID", lesson.CourseID);
+            ViewData["CourseID"] = new SelectList(_context.Courses, nameof(Course.ID), nameof(Course.Name));
             return View(lesson);
         }
 
